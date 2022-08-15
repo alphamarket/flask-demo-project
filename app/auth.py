@@ -38,11 +38,11 @@ def register():
     response.headers["content-type"] = "application/json"
     try:        
         newuser = User(
-            name=request.form['role'],
-            role=request.form['name'],
+            name=request.form['name'],
+            role=request.form['role'],
             email=request.form['email'],
-            username=request.form['password'],
-            password=bcrypt.generate_password_hash(request.form['username'])
+            username=request.form['username'],
+            password=bcrypt.generate_password_hash(request.form['password'])
         )
 
         db.session.add(newuser)

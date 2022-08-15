@@ -13,12 +13,13 @@ class TodosResource(Resource):
 class TodoResource(Resource):
     @login_required
     def get(self, todo_id):
-        return jsonify(Todo.query.filter_by(deleted_at=None).all())
+        return jsonify(Todo.query.filter_by(id=todo_id, deleted_at=None).all())
 
     @login_required
     def post(self):
         todo = Todo(
             created_by=current_user.id,
+            project_id=request.form['project_id'],
             title=request.form['title'],
             body=request.form['body'],
             deleted_at=None 
@@ -37,6 +38,7 @@ class TodoResource(Resource):
         
         todo.body = request.form['body']
         todo.title = request.form['title']
+        todo.project_id = request.form['project_id']
         db.session.add(todo)
         db.session.commit()
 
